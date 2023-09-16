@@ -54,7 +54,7 @@ public class DishServiceImpl  implements DishService {
     @Transactional
     public void saveWithFlavor(DishDTO dishDTO) {
         Dish dish = new Dish();
-//        dishDTO中包含口味数据，通过对象的属性拷贝（前提条件：属性名相同）创建新的类
+        //        dishDTO中包含口味数据，通过对象的属性拷贝（前提条件：属性名相同）创建新的类
         BeanUtils.copyProperties(dishDTO,dish);
 
         //菜品表插入一条数据
@@ -116,12 +116,56 @@ public class DishServiceImpl  implements DishService {
         dishFlavorMapper.deleteByDishId(id);
         }
 
-//        //根据菜品id集合批量删除菜品数据
-//        dishMapper.deleteByIds(ids);
-//        log.info("集合为{}",ids);
-//        //根据菜品id集合批量删除菜品口味数据
-//        dishFlavorMapper.deleteByDishIds(ids);
+        //        //根据菜品id集合批量删除菜品数据
+        //        dishMapper.deleteByIds(ids);
+        //        log.info("集合为{}",ids);
+        //        //根据菜品id集合批量删除菜品口味数据
+        //        dishFlavorMapper.deleteByDishIds(ids);
 
 
+    }
+    /**
+     * 根据id查询菜品以及口味数据
+     * @param id
+     * @return
+     */
+    public DishVO getByIdWithFlavor(Long id) {
+
+        //根据id查询菜品数据
+        Dish dish = dishMapper.getById(id);
+        //根据id查询菜品口味信息
+        List<DishFlavor> dishFlavors=dishFlavorMapper.getByDishId(id);
+        //封装到vo
+        DishVO dishVO = new DishVO();
+        BeanUtils.copyProperties(dish,dishVO);
+        dishVO.setFlavors(dishFlavors);
+
+
+        return dishVO;
+    }
+
+    /**
+     * 根据id修改菜品基本信息以及对应的口味
+     * @param dishDTO
+     */
+    public void updateWithFlavor(DishDTO dishDTO) {
+
+//        新建一个dish对象，将dishDTO的属性copy到新的对象
+        Dish dish = new Dish();
+        BeanUtils.copyProperties(dishDTO,dish);
+
+        //修改菜品基本信息
+        dishMapper.update(dish);
+       //删除原有口味
+        dishFlavorMapper.deleteByDishId(dish.getId());
+       //插入口味数据
+        List<DishFlavor> flavors = dishDTO.getFlavors();
+        if (flavors !=null && flavors.size()>0){
+            flavors.forEach(dishFlavor -> {
+                dishFlavor.setDishId(dishDTO.getId());
+            });
+            //向口味表插入多个数据
+            dishFlavorMapper.insertBatch(flavors);
+        }
     }
 }

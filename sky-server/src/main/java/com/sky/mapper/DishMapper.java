@@ -7,10 +7,7 @@ import com.sky.entity.Dish;
 import com.sky.enumeration.OperationType;
 import com.sky.result.PageResult;
 import com.sky.vo.DishVO;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -67,4 +64,12 @@ public interface DishMapper {
      * @param ids
      */
     void deleteByIds(List<Long> ids);
+
+    /**
+     * 修改菜品的基本信息
+     * @param dish
+     */
+//    所有的修改操作都需要加上修改数据--》自动填充
+    @AutoFill(value = OperationType.UPDATE)
+    void update(Dish dish);
 }
