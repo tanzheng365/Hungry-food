@@ -72,4 +72,11 @@ public interface DishMapper {
 //    所有的修改操作都需要加上修改数据--》自动填充
     @AutoFill(value = OperationType.UPDATE)
     void update(Dish dish);
+
+    /**
+     * 动态条件查询菜品
+     * @param dish
+     * @return
+     */
+    List<Dish> list(Dish dish);
 }
