@@ -18,6 +18,18 @@ sky:
   wechat:
     appid: wx7de449ead191b05c
     secret: dfa8808bb5e8194706dd9ecd9e905f11
+#    mchid : 1561414331
+#    mchSerialNo: 4B3B3DC35414AD50B1B755BAF8DE9CC7CF407606
+#    privateKeyFilePath: D:\apiclient_key.pem
+#    apiV3Key: CZBK51236435wxpay435434323FFDuv3
+#    weChatPayCertFilePath: D:\wechatpay_166D96F876F45C7D07CE98952A96EC980368ACFC.pem
+#    notifyUrl: https://1d5003e4.r6.cpolar.top/wxpay/pay.php
+#    refundNotifyUrl: https://1d5003e4.r6.cpolar.top/wxpay/pay.php
+
+
+  shop:
+  address: 陕西省西安市雁塔区太白南路168号西安文理学院内
+
 
 
 
